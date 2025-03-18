@@ -1,2 +1,2 @@
 # db-sales
-Definition of sales database
+Definition of database for sales
