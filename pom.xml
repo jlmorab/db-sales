@@ -6,7 +6,7 @@
 
 	<groupId>com.jlmorab.ms.data</groupId>
 	<artifactId>db-sales</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>db-sales</name>
 	<description>Database sales definition</description>
 
@@ -21,6 +21,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
 	</properties>
+	
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub jlmorab Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/jlmorab/ms.data</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 
@@ -30,6 +38,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.14.0</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.18.0</version>
 			</plugin>
 
 		</plugins>

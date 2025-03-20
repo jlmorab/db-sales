@@ -4,4 +4,78 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 	
+	<changeSet id="1" author="jlmorab" runInTransaction="false" labels="schema" context="sales">
+        <comment>Schema for sales</comment>
+        <sql>
+            CREATE SCHEMA sales;
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DROP SCHEMA IF EXISTS sales CASCADE;
+            ]]>
+        </rollback>
+    </changeSet>
+	<changeSet id="2" author="jlmorab" labels="table" context="sales">
+        <comment>Status for orders</comment>
+        <sql>
+            CREATE TABLE sales.cat_order_status(
+				ost_id SERIAL NOT NULL,
+				ost_name VARCHAR(50) NOT NULL,
+				CONSTRAINT pk_cat_order_status
+					PRIMARY KEY(ost_id),
+				CONSTRAINT un_cat_order_status_name
+					UNIQUE(ost_name)
+			);
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DROP TABLE IF EXISTS sales.cat_order_status;
+            ]]>
+        </rollback>
+    </changeSet>
+    <changeSet id="3" author="jlmorab" labels="table" context="sales">
+        <comment>Order tracking</comment>
+        <sql>
+            CREATE TABLE sales.tra_order(
+				ord_id SERIAL NOT NULL,
+				ost_id INT NOT NULL,
+				cli_id INT NOT NULL,
+				ord_created TIMESTAMP NOT NULL,
+				ord_updated TIMESTAMP NOT NULL,
+				CONSTRAINT pk_tra_order
+					PRIMARY KEY(ord_id),
+				CONSTRAINT fk_tra_order_status
+					FOREIGN KEY(ost_id) REFERENCES sales.cat_order_status(ost_id)
+			);
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DROP TABLE IF EXISTS sales.tra_order;
+            ]]>
+        </rollback>
+    </changeSet>
+    <changeSet id="4" author="jlmorab" labels="table" context="sales">
+        <comment>Order detail</comment>
+        <sql>
+            CREATE TABLE sales.tra_order_detail(
+				odd_id SERIAL NOT NULL, 
+				ord_id INT NOT NULL,
+				pro_id INT NOT NULL,
+				odd_amount INT NOT NULL,
+				odd_price DECIMAL(10,4) NOT NULL,
+				odd_discount DECIMAL(10,4),
+				CONSTRAINT pk_tra_order_detail
+					PRIMARY KEY(odd_id),
+				CONSTRAINT fk_tra_order_detail_order
+					FOREIGN KEY(ord_id) REFERENCES sales.tra_order(ord_id),
+				CONSTRAINT un_tra_order_detail_definition
+					UNIQUE(ord_id, pro_id)
+			);
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DROP TABLE IF EXISTS sales.tra_order_detail;
+            ]]>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
