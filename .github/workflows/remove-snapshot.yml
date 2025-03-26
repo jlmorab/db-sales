@@ -26,9 +26,14 @@ jobs:
                 java-version: '21'
                 distribution: 'temurin'
                 cache: maven
+                server-id: github
+                server-username: GITHUB_ACTOR
+                server-password: GITHUB_TOKEN
 
             - name: Remove SNAPSHOT from pom.xml file
               run: mvn versions:set -DremoveSnapshot -DgenerateBackupPoms=false
+              env:
+                GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
                     
             - name: Get project version
               id: version
