@@ -78,4 +78,18 @@
             ]]>
         </rollback>
     </changeSet>
+    <changeSet id="5" author="jlmorab" labels="table, edit" context="sales">
+        <comment>Alter type of ID field for the order status catalog</comment>
+        <sql>
+            ALTER TABLE sales.cat_order_status ALTER COLUMN ost_id DROP DEFAULT;
+            DROP SEQUENCE IF EXISTS sales.cat_order_status_ost_id_seq;
+        </sql>
+        <rollback>
+        	<![CDATA[
+            CREATE SEQUENCE sales.cat_order_status_ost_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+            ALTER TABLE sales.cat_order_status ALTER COLUMN ost_id SET DEFAULT nextval('sales.cat_order_status_ost_id_seq');
+            ALTER SEQUENCE sales.cat_order_status_ost_id_seq OWNED BY sales.cat_order_status.ost_id;
+            ]]>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
