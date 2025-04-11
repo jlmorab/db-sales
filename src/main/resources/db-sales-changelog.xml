@@ -78,4 +78,36 @@
             ]]>
         </rollback>
     </changeSet>
+    <changeSet id="5" author="jlmorab" labels="table, edit" context="sales">
+        <comment>Alter type of ID field for the order status catalog</comment>
+        <sql>
+            ALTER TABLE sales.cat_order_status ALTER COLUMN ost_id DROP DEFAULT;
+            DROP SEQUENCE IF EXISTS sales.cat_order_status_ost_id_seq;
+        </sql>
+        <rollback>
+        	<![CDATA[
+            CREATE SEQUENCE sales.cat_order_status_ost_id_seq START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+            ALTER TABLE sales.cat_order_status ALTER COLUMN ost_id SET DEFAULT nextval('sales.cat_order_status_ost_id_seq');
+            ALTER SEQUENCE sales.cat_order_status_ost_id_seq OWNED BY sales.cat_order_status.ost_id;
+            ]]>
+        </rollback>
+    </changeSet>
+    <changeSet id="6" author="jlmorab" labels="catalog, records" context="sales">
+        <comment>Order status catalog records</comment>
+        <sql>
+            INSERT INTO sales.cat_order_status(ost_id, ost_name) VALUES
+            (100, 'Open'),
+            (150, 'Complete'),
+            (200, 'Supplying'),
+            (300, 'Charging'), 
+            (900, 'Attended'),
+            (910, 'Closed'),
+            (920, 'Rejected');
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DELETE FROM sales.cat_order_status WHERE ost_id IN (100, 150, 200, 300, 900, 910, 920);
+            ]]>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

@@ -21,10 +21,15 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: maven
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
 
       - name: Get project version
         id: get_version
         run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
       - name: Create tag
         run: |
