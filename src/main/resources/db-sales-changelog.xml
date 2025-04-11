@@ -92,4 +92,22 @@
             ]]>
         </rollback>
     </changeSet>
+    <changeSet id="6" author="jlmorab" labels="catalog, records" context="sales">
+        <comment>Order status catalog records</comment>
+        <sql>
+            INSERT INTO sales.cat_order_status(ost_id, ost_name) VALUES
+            (100, 'Open'),
+            (150, 'Complete'),
+            (200, 'Supplying'),
+            (300, 'Charging'), 
+            (900, 'Attended'),
+            (910, 'Closed'),
+            (920, 'Rejected');
+        </sql>
+        <rollback>
+        	<![CDATA[
+            DELETE FROM sales.cat_order_status WHERE ost_id IN (100, 150, 200, 300, 900, 910, 920);
+            ]]>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
