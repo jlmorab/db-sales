@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>db-sales</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.3.0</version>
 	<name>db-sales</name>
 	<description>Database sales definition</description>
 
