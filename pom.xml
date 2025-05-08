@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>com.jlmorab.ms.data</groupId>
 		<artifactId>db-parent</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 
 	<artifactId>db-sales</artifactId>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<name>db-sales</name>
 	<description>Database sales definition</description>
 
@@ -37,10 +37,58 @@
 	
 	<repositories>
 		<repository>
-			<id>github</id>
+			<id>github-ms.data</id>
 			<name>GitHub jlmorab - Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/jlmorab/ms.data</url>
 		</repository>
+		<repository>
+			<id>github-ms</id>
+			<name>GitHub jlmorab - Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/jlmorab/ms</url>
+		</repository>
 	</repositories>
+	
+	<dependencies>
+	
+		<!-- Test dependencies -->
+	
+		<dependency>
+			<groupId>com.jlmorab.ms.data</groupId>
+			<artifactId>db-instance</artifactId>
+			<version>0.3.0</version>
+			<scope>test</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.jlmorab.ms</groupId>
+			<artifactId>ms-test-tools</artifactId>
+			<version>0.5.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jlmorab.ms</groupId>
+			<artifactId>ms-testcontainers-tools</artifactId>
+			<version>0.4.1</version>
+			<scope>test</scope>
+		</dependency>
+	
+	</dependencies>
+	
+	<build>
+		
+		<plugins>
+			
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-maven-plugin</artifactId>
+	            <configuration>
+	                <skip>true</skip>
+	            </configuration>
+			</plugin>
+			
+		</plugins>
+		
+	</build>
 
 </project>
